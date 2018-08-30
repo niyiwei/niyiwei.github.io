@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="你以为" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第四章 - SQL与关系数据库基本操作SQL概述什么是SQL结构化查询语言 （Structured Query Language，SQL）是专门用来与数据库通信的语言，它可以帮助用户操作关系数据库">
+<meta name="keywords" content="你以为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库系统原理 - SQL与关系数据库基本操作">
+<meta property="og:url" content="http://yoursite.com/2018/08/27/第四章/index.html">
+<meta property="og:site_name" content="你以为">
+<meta property="og:description" content="第四章 - SQL与关系数据库基本操作SQL概述什么是SQL结构化查询语言 （Structured Query Language，SQL）是专门用来与数据库通信的语言，它可以帮助用户操作关系数据库">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-30T13:50:08.039Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库系统原理 - SQL与关系数据库基本操作">
+<meta name="twitter:description" content="第四章 - SQL与关系数据库基本操作SQL概述什么是SQL结构化查询语言 （Structured Query Language，SQL）是专门用来与数据库通信的语言，它可以帮助用户操作关系数据库">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/27/第四章/"/>
+
+
+
+
+
+  <title>数据库系统原理 - SQL与关系数据库基本操作 | 你以为</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c7ff88bce229cea97726933d6cfc5d5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">你以为</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学而不厌，诲人不倦「孔子」</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heart"></i> <br />
+            
+            生活
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/27/第四章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="你以为">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="你以为">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据库系统原理 - SQL与关系数据库基本操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-27T20:30:02+08:00">
+                2018-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/考试/" itemprop="url" rel="index">
+                    <span itemprop="name">考试</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/考试/数据库系统原理/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库系统原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,163
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第四章-SQL与关系数据库基本操作"><a href="#第四章-SQL与关系数据库基本操作" class="headerlink" title="第四章 - SQL与关系数据库基本操作"></a>第四章 - SQL与关系数据库基本操作</h1><h2 id="SQL概述"><a href="#SQL概述" class="headerlink" title="SQL概述"></a>SQL概述</h2><h3 id="什么是SQL"><a href="#什么是SQL" class="headerlink" title="什么是SQL"></a>什么是SQL</h3><p><strong>结构化查询语言</strong> （Structured Query Language，SQL）是专门用来与数据库通信的语言，它可以帮助用户操作关系数据库</p>
+<a id="more"></a>
+<h3 id="SQL的特点"><a href="#SQL的特点" class="headerlink" title="SQL的特点"></a>SQL的特点</h3><ul>
+<li>SQL不是某个特定数据库供应商专用的语言</li>
+<li>SQL简单易学</li>
+<li>SQL强大、灵活，可以进行非常复杂和高级的数据库操作</li>
+</ul>
+<h3 id="SQL的组成"><a href="#SQL的组成" class="headerlink" title="SQL的组成"></a>SQL的组成</h3><ul>
+<li>数据查询</li>
+<li>数据定义</li>
+<li>数据操纵</li>
+<li>数据控制</li>
+</ul>
+<p><strong>数据定义语言（Date Definition Language，DDL）</strong></p>
+<ul>
+<li>CREATE 创建数据库或数据库对象</li>
+<li>ALTER 对数据库或数据库对象进行修改</li>
+<li>DROP 删除数据库或数据库对象</li>
+</ul>
+<p><strong>数据库操纵语言（Date Manipulation Language，DML）</strong></p>
+<ul>
+<li>SELECT 从表或视图中检索数据</li>
+<li>INSERT 将数据插入到表或视图中</li>
+<li>UPDATE 修改表或视图中的数据</li>
+<li>DELETE 从表或视图中删除数据</li>
+</ul>
+<p><strong>数据控制语言（Data Control Language，DCL）</strong></p>
+<ul>
+<li>GRANT 用于授予权限</li>
+<li>REVOKE 用于收回权限</li>
+</ul>
+<p><strong>嵌入式和动态SQL规则</strong></p>
+<p>规定SQL语句在高级程序设计语言中使用的规范方法，以便适应较为复杂的应用</p>
+<p><strong>SQL调用和会话规则</strong></p>
+<p>SQL调用包括SQL例程和调用规则，以便提高SQL的灵活性、有效性、共享性以及使SQL具有更多的高级语言的特征；</p>
+<p>SQL会话规则可使应用程序连接到多个SQL的服务器中的某一个，并与之交互。</p>
+<h2 id="MySQL预备知识"><a href="#MySQL预备知识" class="headerlink" title="MySQL预备知识"></a>MySQL预备知识</h2><h3 id="MySQL使用基础"><a href="#MySQL使用基础" class="headerlink" title="MySQL使用基础"></a>MySQL使用基础</h3><p>关系数据库管理系统（ <strong>RDBMS</strong> ）</p>
+<ul>
+<li>LAMP - （Linux Apache MySQL PHP/Perl/Python）</li>
+<li>WAMP -  (Windows Apache MySQL PHP/Perl/Python)</li>
+</ul>
+<h3 id="MySQL扩展语言要素"><a href="#MySQL扩展语言要素" class="headerlink" title="MySQL扩展语言要素"></a>MySQL扩展语言要素</h3><ul>
+<li><p>常量</p>
+<ul>
+<li><p>字符串常量（也称字面值或标量值）</p>
+<p>  用单引号或双引号括起来的字符序列，分为ASCLL字符串常量和Unicode字符串常量</p>
+</li>
+<li><p>数值常量</p>
+<ul>
+<li>整数常量</li>
+<li>浮点数常量</li>
+</ul>
+</li>
+<li>十六进制常量（每对十六进制数字被转换为一个字符，其最前面有一个字母’X’或“x”）</li>
+<li>时间日期常量（用单引号讲表示日期时间的字符串括起来而构成的）</li>
+<li>位字段值 格式：b’value’ -&gt; 二进制值</li>
+<li>布尔值 TURE -&gt; 1, FALSE -&gt; 0</li>
+<li>NULL值</li>
+</ul>
+</li>
+<li><p>变量</p>
+<ul>
+<li><p>用户变量<br>  用户变量前常添加一个符号@，用于将其与列名区分开</p>
+</li>
+<li><p>系统变量<br>  大多数系统变量应用于其他SQL语句中时，必须在系统变量前添加两个@</p>
+</li>
+</ul>
+</li>
+<li>运算符<ul>
+<li>算数运算符：+（加），-（减），*（乘），/（除），%（求模）</li>
+<li>位运算符：&amp;（位于），|（位或），^（位异或），~（位取反），&gt;&gt;（位右移），&lt;&lt;（位左移）</li>
+<li>比较运算符：=，&lt;，&gt;，&gt;=，&lt;=，&lt;&gt;，!=，&lt;=&gt;</li>
+<li>逻辑运算符：NOT或！（逻辑非），AND或%%（逻辑与），OR或||（逻辑或），XOR（逻辑异常）</li>
+</ul>
+</li>
+<li><p>表达式</p>
+<p>  表达式是常量、变量、列名、复杂计算、运算符和函数的组合</p>
+</li>
+<li><p>内置函数</p>
+<ul>
+<li>数学函数</li>
+<li>聚合函数</li>
+<li>字符串函数</li>
+<li>日期和时间函数</li>
+<li>加密函数</li>
+<li>控制流程函数</li>
+<li>格式化函数</li>
+<li>类型转换函数</li>
+<li>系统信息函数<br>### </li>
+</ul>
+</li>
+</ul>
+<h2 id="数据定义"><a href="#数据定义" class="headerlink" title="数据定义"></a>数据定义</h2><h3 id="数据库模式定义"><a href="#数据库模式定义" class="headerlink" title="数据库模式定义"></a>数据库模式定义</h3><p>####创建数据库<br>使用 <strong>CRESTE DATABASE</strong> 或 <strong>CREATE SCHEMA</strong> 语句</p>
+<p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE &#123;DATABASE | SCHEMA&#125; [IF NOT EXISTS] db_name</span><br><span class="line">[DEFAULT] CHARACTER SET[=]charset_name</span><br><span class="line">|[DEFAULT]COLLATE[=]collation_name</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database if not exists mysql_test default character set = gbk;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>[]：表示其内容为可选项；<br>|： 用于分割花括号中的选项</p>
+<h4 id="选择数据库"><a href="#选择数据库" class="headerlink" title="选择数据库"></a>选择数据库</h4><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE DATABASE_NAME;</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; USE mysql_test;</span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure></p>
+<h4 id="修改数据库"><a href="#修改数据库" class="headerlink" title="修改数据库"></a>修改数据库</h4><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER &#123;DATABASE|SCHEMA&#125; [db_name]</span><br><span class="line">alter_specification...</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER DATABASE mysql_test</span><br><span class="line">    -&gt; DEFAULT CHARACTER SET gb2312</span><br><span class="line">    -&gt; DEFAULT COLLATE gb2312_chinese_ci;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h4 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h4><p>语法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP &#123;DATABASE|SCHEMA&#125; [IF EXISTS] [db_name]</span><br></pre></td></tr></table></figure></p>
+<p>栗子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DROP DATABASE IF EXISTS mysql_test;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h4 id="查看数据库"><a href="#查看数据库" class="headerlink" title="查看数据库"></a>查看数据库</h4><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW &#123;DATABASES|SCHEMA&#125;</span><br><span class="line">[LIKE &apos;pattern&apos; | WHERE expr]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>LIKE 关键字用于匹配指定的数据库名称</li>
+<li>WHERE 从句用于指定数据库名称查询范围的条件</li>
+</ul>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ysql&gt; SHOW DATABASES;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| mysql_test         |</span><br><span class="line">| performance_schema |</span><br><span class="line">| study              |</span><br><span class="line">| sys                |</span><br><span class="line">+--------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h3 id="表定义"><a href="#表定义" class="headerlink" title="表定义"></a>表定义</h3><h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><p>数据表示关系数据库中最重要的、最基本的数据对象，也是数据存储的基本单位</p>
+<p>数据表，被定义为字段的集合，按行和列的格式来存储的，每一行代表一个记录，每一列代表记录中一个字段的取值</p>
+<p>CREATE TABLE 语句创建表</p>
+<p>主要由：</p>
+<ul>
+<li>表创建定义（create definition）</li>
+<li>表选项：（table options）</li>
+<li>分区选项：（partition options）</li>
+</ul>
+<p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE [TEMPORARY] TABLE tbl_name</span><br><span class="line">(</span><br><span class="line">    字段名1 数据类型 [列级完整性约束条件][默认值]</span><br><span class="line">    [,字段名2 数据类型 [列级完整性约束条件][默认值]]</span><br><span class="line">    [,表级完整性约束]</span><br><span class="line">)[ENGINT=引擎类型]</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br>在一个已有的数据库mysql_test中新建一个包含客户姓名、性别、地址、联系方式等内容的客户基本信息表，要求将客户的id号指定为该表的主键<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE customers</span><br><span class="line">    -&gt; (</span><br><span class="line">    -&gt; cust_id int not null auto_increment</span><br><span class="line">    -&gt; ,cust_name varchar(50) not null</span><br><span class="line">    -&gt; ,cust_sex char(1) not null</span><br><span class="line">    -&gt; ,cust_address char(50) null</span><br><span class="line">    -&gt; ,cust_contact char(50) null</span><br><span class="line">    -&gt; ,primary key (cust_id)</span><br><span class="line">    -&gt; );</span><br><span class="line">Query OK, 0 rows affected (0.05 sec)</span><br></pre></td></tr></table></figure></p>
+<h4 id="更新表"><a href="#更新表" class="headerlink" title="更新表"></a>更新表</h4><p>使用<strong>ALTER TABLE</strong>语句，增加或删减列，创建或取消索引，更改原有列的数据类型，重新命名列或表，更改表的评注和表达引擎类型，为表重新创建触发器、存储过程、索引和外建等。</p>
+<ol>
+<li>ADD[COLUMN]子句</li>
+</ol>
+<p>示例：想数据库mysql_test的表customers中添加一列，并命名为cust_city,要求不能为null，默认值为字符串”Wuhan”,且该列位于原表cust_sex列之后。</p>
+<p>语法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE mysql_test.customers</span><br><span class="line">ADD COLUMN cust_city char(10) NOT NULL DEFAULT &apos;Wuhan&apos; AFTER cust_sex;</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE mysql_test.customers ADD COLUMN cust_city char(10) NOT NULL DEFAULT &apos;Wuhan&apos; AFTER cust_sex;</span><br><span class="line">Query OK, 0 rows affected (0.04 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>CHANGE[COLUMN]子句 (修改表中列的名称或数据类型)</li>
+</ol>
+<p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE mysql.test.customers</span><br><span class="line">CHANGE COLUMN cust_sex sex char(1) NULL DEFULT &apos;M&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>栗子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE mysql_test.customers</span><br><span class="line">    -&gt; CHANGE COLUMN cust_sex sex char(2) NULL DEFAULT &apos;M&apos;;</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure></p>
+<ol start="3">
+<li>ALTER[COLUMN]子句 修改或删除表中指定列的默认值</li>
+</ol>
+<p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE mysql_test.customers</span><br><span class="line">ALTER COLUMN cust_city SET DEFAULT &apos;Beijing&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABlE mysql_test.customers ALTER COLUMN cust_city SET DEFAULT &apos;Beijing&apos;;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure></p>
+<ol start="4">
+<li>MODIFY[COLUMN]子句 只修改指定列的数据类型，不会干涉它的列名<br>语法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE mysql_test.customers</span><br><span class="line">MODIFY COLUMN cust_name char(20) FIRST;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>栗子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE mysql_test.customers</span><br><span class="line">    -&gt; MODIFY COLUMN cust_name char(11) not null AFTER cust_id;</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure></p>
+<ol start="5">
+<li><p>DROP[COLUMN]子句 删除列<br>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE mysql_test.customers DROP COLUMN cust_contact;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>RENAME[TO]子句 更新表名</p>
+</li>
+</ol>
+<p>语法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE mysql_test.customers</span><br><span class="line">RENAME TO my_customers;</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE mysql_test.customers</span><br><span class="line">    -&gt; RENAME TO backup_customers;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h4 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h4><p>语法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP[TEMPORANY] TABLE [IF EXISTS] tb_name [,tb_name]</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DROP TABLE IF EXISTS backup_customers;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br></pre></td></tr></table></figure></p>
+<h4 id="查看表"><a href="#查看表" class="headerlink" title="查看表"></a>查看表</h4><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW [FULL] COLUMN &#123;FROM | IN&#125; tbl_name [&#123;FROM | IN&#125; db_name] [LIKE &apos;pattern&apos; | WHERE expr]</span><br></pre></td></tr></table></figure></p>
+<p>显示指定数据表的结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;DESCRIBE | DESC&#125; tbl_name [col_name | wild]</span><br></pre></td></tr></table></figure></p>
+<p>栗子：</p>
+<h3 id="索引定义"><a href="#索引定义" class="headerlink" title="索引定义"></a>索引定义</h3><p>索引是DBMS根据表中的一列或若干列按照一定顺序建立的列值与记录行之间的对应关系表</p>
+<p>索引是提高数据文件访问效率的有效方法</p>
+<p>索引存在的弊端：</p>
+<ol>
+<li>索引是以文件的形式存储的，如果有大量的索引，索引文件可能比数据更快达到最大的文件尺寸</li>
+<li>索引在提高查询速度的同时，会降低更新表的速度<ul>
+<li>普通索引（INDX或KEY）</li>
+<li>唯一性索引(UNIQUE)</li>
+<li>主键(PRIMARY KEY)</li>
+</ul>
+</li>
+</ol>
+<p><strong>索引通常被创建成单列索引和组合索引</strong></p>
+<h4 id="索引的创建：（使用CREATE-INDEX语句创建）"><a href="#索引的创建：（使用CREATE-INDEX语句创建）" class="headerlink" title="索引的创建：（使用CREATE INDEX语句创建）"></a>索引的创建：（使用CREATE INDEX语句创建）</h4><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE [UNIQUE] INDEX index_name </span><br><span class="line">ON tbl_name(index_col_name...)</span><br></pre></td></tr></table></figure></p>
+<p>col_name[(length)][ASC|DESC]</p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE INDEX index_customers</span><br><span class="line">    -&gt; ON mysql_test.customers(cust_name(3) ASC);</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br></pre></td></tr></table></figure></p>
+<p>组合索引栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE INDEX index_cust</span><br><span class="line">    -&gt; ON mysql_test.customers(cust_name, cust_id);</span><br></pre></td></tr></table></figure></p>
+<p>索引的创建：使用 CREATE TABLE 语法创建</p>
+<ol>
+<li>语法项 [CONSTRAINT[symbol]] PRIMARY KEY(index_col_name, …),用于表示在创建新表的同时创建该表的主键；</li>
+<li>语法项 {INDEX|KEY}<a href="index_col_name,...">index_name</a>,用于表示在创建新表的同时创建该表的索引；</li>
+<li>语法项 [CONSTRAINT[symbol]]UNIQUE[INDEX|KEY]<a href="index_col_name,...">index_name</a> 用于表示在创建新表的同时创建该表的唯一性索引</li>
+<li>语法项 [CONSTRAINT[symbol]] FOREIGN KEY <a href="index_col_name, ...">index_name</a>,用于表示在创建新表的同时创建该表的外建</li>
+</ol>
+<p>栗子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table seller</span><br><span class="line">    -&gt; (</span><br><span class="line">    -&gt;     seller_id int not null auto_increment</span><br><span class="line">    -&gt;     ,seller_name char(50) not null</span><br><span class="line">    -&gt;     ,seller_address char(50) null</span><br><span class="line">    -&gt;     ,seller_contact char(50) null</span><br><span class="line">    -&gt;     ,product_type int(5) not null</span><br><span class="line">    -&gt;     ,sales int null</span><br><span class="line">    -&gt;     ,primary key(seller_id, product_type)</span><br><span class="line">    -&gt;     ,index index_seller(sales)</span><br><span class="line">    -&gt; );</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br></pre></td></tr></table></figure></p>
+<p>索引的创建：使用ALTER TABLE语句创建</p>
+<ol>
+<li>语法项：ADD {INDEX | KEY} <a href="index_col_name, ...">index_name</a>, 用于表示在修改表的同时为该表添加索引</li>
+<li>语法项：ADD [CONSTRAINT [symbol]] PRIMARY KEY (index_col_name,…), 用于表示在创建新表的同时为该表添加主键</li>
+<li>语法项：ADD [CONSTRAINT [symbol]] UNIQUE [INDEX | KEY]<a href="index_col_name, ...">index_name</a>,用于表示在修改表的同时为该表添加唯一性索引</li>
+<li>语法项：ADD [CONSTRAINT [symbol]] FOREIGN KEY (index_col_name,…),用于表示在创建新表的同时为该表添加外建</li>
+</ol>
+<h4 id="查看索引（SHOW-INDEX）"><a href="#查看索引（SHOW-INDEX）" class="headerlink" title="查看索引（SHOW INDEX）"></a>查看索引（SHOW INDEX）</h4><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SHOW &#123;INDEX | INDEXES | KEYS&#125;</span><br><span class="line">&#123;FROM | IN&#125; tbl_name</span><br><span class="line">[&#123;FROM | IN&#125; db_name]</span><br><span class="line">[WHERE expr]</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show index from seller;</span><br><span class="line">+--------+------------+--------------+--------------+--------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span><br><span class="line">| Table  | Non_unique | Key_name     | Seq_in_index | Column_name  | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |</span><br><span class="line">+--------+------------+--------------+--------------+--------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span><br><span class="line">| seller |          0 | PRIMARY      |            1 | seller_id    | A         |           0 |     NULL | NULL   |      | BTREE      |         |               |</span><br><span class="line">| seller |          0 | PRIMARY      |            2 | product_type | A         |           0 |     NULL | NULL   |      | BTREE      |         |               |</span><br><span class="line">| seller |          1 | index_seller |            1 | sales        | A         |           0 |     NULL | NULL   | YES  | BTREE      |         |               |</span><br><span class="line">+--------+------------+--------------+--------------+--------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h4 id="删除索引：使用DROP-INDEX语句"><a href="#删除索引：使用DROP-INDEX语句" class="headerlink" title="删除索引：使用DROP INDEX语句"></a>删除索引：使用DROP INDEX语句</h4><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP INDEX index_cust ON mysql_test.customers;</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; drop index index_cust ON customers;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用ALTER-TABLE语句删除"><a href="#使用ALTER-TABLE语句删除" class="headerlink" title="使用ALTER TABLE语句删除"></a>使用ALTER TABLE语句删除</h4><ol>
+<li>选用 DROP PRIMARY KEY 子句用于删除表中的主键，由于一个表中只有一个主键，其也是一个索引</li>
+<li>选用DROP INDEX子句用于删除各种类型的索引</li>
+<li>选用DROP FOREIGN KEY 子句用于删除外建</li>
+</ol>
+<p>栗子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE T_NAME</span><br><span class="line">DROP PRIMARY KEY</span><br><span class="line">,DROP INDEX INDEX_NAME</span><br><span class="line">,DROP FOREIGN KEY</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据更新"><a href="#数据更新" class="headerlink" title="数据更新"></a>数据更新</h2><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><p>语法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT [INSERT] tbl_name [(col_name,...)]</span><br><span class="line">&#123;VALUES | VALUE&#125; (&#123;expr | DEFAULT&#125;,...),(...)...</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into customers(cust_id, cust_name, cust_sex, cust_address, cust_contact) values (901, &apos;张三&apos;, &apos;F&apos;, &apos;北京市&apos;, &apos;朝阳区&apos;);</span><br><span class="line">Query OK, 1 row affected (0.02 sec)</span><br></pre></td></tr></table></figure></p>
+<p>使用INSERT … SET 语句插入部分列值数据</p>
+<p>使用INSERT …SELECT语句插入子查询数据</p>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><p>使用DELETE语句删除一行或多行数据</p>
+<h3 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h3><p>使用UPDATE语句修改更新一个表中的数据</p>
+<h2 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h2><h3 id="SELECT语句"><a href="#SELECT语句" class="headerlink" title="SELECT语句"></a>SELECT语句</h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT [ALL | DISTINCT | DISTINCTROW]</span><br><span class="line">select_expr [, select_expr ...]</span><br><span class="line">FROM tbl_name</span><br><span class="line">[WHERE where_condition]</span><br><span class="line">[GROUP BY &#123;col_name|expr|position&#125;</span><br><span class="line">[ASC|DESC],...[WITH ROLLUP]]</span><br><span class="line">[HAVING where_condition]</span><br><span class="line">[ORDER BY &#123;col_name | expr | position&#125; [ASC | DESC],...]</span><br><span class="line">[LIMIT &#123;[offset,]row_count | row_count OFFSET offset]</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">子句</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:center">是否必须使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SELECT</td>
+<td style="text-align:left">要返回的列或表达式</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:left">FROM</td>
+<td style="text-align:left">从中检索数据的表</td>
+<td style="text-align:center">仅在从表选择数据时使用</td>
+</tr>
+<tr>
+<td style="text-align:left">WHERE</td>
+<td style="text-align:left">行级过滤</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:left">GROUP BY</td>
+<td style="text-align:left">分组说明</td>
+<td style="text-align:center">仅在按组计算聚合时使用</td>
+</tr>
+<tr>
+<td style="text-align:left">HAVING</td>
+<td style="text-align:left">组级过滤</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:left">ORDER BY</td>
+<td style="text-align:left">输出排序顺序</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:left">LIMIT</td>
+<td style="text-align:left">要检索的函数</td>
+<td style="text-align:center">否</td>
+</tr>
+</tbody>
+</table>
+<h3 id="列的选择与指定"><a href="#列的选择与指定" class="headerlink" title="列的选择与指定"></a>列的选择与指定</h3><ol>
+<li>查询指定列 SELECT col_name1,col_name2 FROM tbl_name</li>
+<li>查询所有列 SELECT * FROM tbl_name</li>
+<li>定义并使用列的别名 SELECT cust_name as 地址 from customers;</li>
+<li>替换查询结果集中的数据</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CASE </span><br><span class="line">WHEN 条件1 THEN 表达式1 </span><br><span class="line">WHEN 条件2 THEN 表达式2</span><br><span class="line">....</span><br><span class="line">ELSE 表达式</span><br><span class="line">END [AS] column_alias</span><br></pre></td></tr></table></figure>
+<p>例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT cust_name, CASE WHEN cust_sex = &apos;m&apos; THEN &apos;男&apos; ELSE &apos;女&apos; END AS 性别 FROM customers;</span><br><span class="line">+-----------+--------+</span><br><span class="line">| cust_name | 性别   |</span><br><span class="line">+-----------+--------+</span><br><span class="line">| 哇哈哈    | 男     |</span><br><span class="line">+-----------+--------+</span><br></pre></td></tr></table></figure></p>
+<p>计算列值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT cust_id + 100, cust_name, cust_sex FROM customers;</span><br><span class="line">+---------------+-----------+----------+</span><br><span class="line">| cust_id + 100 | cust_name | cust_sex |</span><br><span class="line">+---------------+-----------+----------+</span><br><span class="line">|           101 | 哇哈哈    | m        |</span><br><span class="line">+---------------+-----------+----------+</span><br></pre></td></tr></table></figure></p>
+<p>聚合函数：通常是数据库系统中一类系统 <strong>内置函数</strong><br>|函数名|说明|<br>|:–|:–|<br>|COUNT|求组中项数，返回INT类型整数|<br>|MAX|求最大值|<br>|MIN|求最小值|<br>|SUM|返回表达式中所有值的和|<br>|AVG|求组中值的平均值|<br>|STD或STDDEV|返回给定表达式中所有值的标准值|<br>|VARIANC|返回给定表达式中所有值的方差|<br>|GROUP_CONTACT|返回由属于一组的列值连接组合而成的结果|<br>|BIT_AND|逻辑或|<br>|BIR_OR|逻辑与|<br>|BIT_XOR|逻辑异或|</p>
+<h3 id="FROM子句与多表连接查询"><a href="#FROM子句与多表连接查询" class="headerlink" title="FROM子句与多表连接查询"></a>FROM子句与多表连接查询</h3><h4 id="交叉连接，又称笛卡尔积"><a href="#交叉连接，又称笛卡尔积" class="headerlink" title="交叉连接，又称笛卡尔积"></a>交叉连接，又称笛卡尔积</h4><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM tbl1 CROSS JOIN tbl2;</span><br><span class="line">OR</span><br><span class="line">SELECT * FROM tbl1, tbl2;</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from tbl1 cross join tbl2;</span><br><span class="line">mysql&gt; select * from tbl1,tbl2;</span><br></pre></td></tr></table></figure></p>
+<h4 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h4><p>语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT some_columns FROM table1 INNER JOIN table2 ON some_conditions;</span><br></pre></td></tr></table></figure></p>
+<p>栗子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>等值连接：使用运算符=</li>
+<li>非等值连接：使用除=之外的其他比较运算符</li>
+<li>自然连接：将一个表与他自身进行连接</li>
+</ol>
+<h4 id="外链接"><a href="#外链接" class="headerlink" title="外链接"></a>外链接</h4><ol>
+<li>左外链接：在FROM子句中使用关键字LEFT OUTER JOIN 或 LEFT JOIN</li>
+<li>右外链接：在FROM子句中使用关键字RIGHT OUTER JOIN 或 RIGHT JOIN</li>
+</ol>
+<p>简述左外连接和右外连接的区别</p>
+<p>左外链接：也称左连接。以左表为基表，在FROM子中使用关键字“LEFT OUTER JOIN”或关键字 “LEFT JOIN” 来连接两张表。<br>右外连接：也称右连接。以右表为基表，在FROM子句中使用关键字“RIGHT OUTER JOIN”或关键字“RIGHT JOIN”来连接两张表</p>
+<h3 id="WHERE子句与条件查询"><a href="#WHERE子句与条件查询" class="headerlink" title="WHERE子句与条件查询"></a>WHERE子句与条件查询</h3><p>比较运算符</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">比较运算符</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">=</td>
+<td style="text-align:left">等于</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;&gt;</td>
+<td style="text-align:left">不等于</td>
+</tr>
+<tr>
+<td style="text-align:left">!=</td>
+<td style="text-align:left">不等于</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;</td>
+<td style="text-align:left">小于</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;=</td>
+<td style="text-align:left">小于等于</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;</td>
+<td style="text-align:left">大于</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;=</td>
+<td style="text-align:left">大于等于</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;=&gt;</td>
+<td style="text-align:left">不会返回UNKNOWN</td>
+</tr>
+</tbody>
+</table>
+<p>判断范围</p>
+<p>当查询的过滤条件被限定在值的某个范围时，可以使用关键字“BETWEEN”<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM customers WHERE cust_id BETWEEN 1 AND 2;</span><br></pre></td></tr></table></figure></p>
+<p>使用关键字“IN”可以指定一个值的枚举表，该表中会列举所有可能的值<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FRON customers WHERE cust_id in (1,2,3,4,5);</span><br></pre></td></tr></table></figure></p>
+<p>判定空值<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM customers WHERE cust_contact is null;</span><br></pre></td></tr></table></figure></p>
+<p>IN,ANY,SOME</p>
+<p>NOT IN , &lt;&gt;ALL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM tb_name WHERE col_name &#123;IN|ANY|SOME&#125; (1,2,3)</span><br></pre></td></tr></table></figure>
+<p><strong>子查询-结合关键字 “EXIST”使用的子查询</strong></p>
+<p>子查询的结果集不为空，则返回TRUE，否则返回FALSE<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM customers WHERE EXISTS (SELECT * FROM customers);</span><br><span class="line"></span><br><span class="line">SELECT * FROM customers WHERE NOT EXISTS (SELECT * FROM customers);</span><br></pre></td></tr></table></figure></p>
+<h3 id="GROUP-BY-子句"><a href="#GROUP-BY-子句" class="headerlink" title="GROUP BY 子句"></a>GROUP BY 子句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM customers GROUP BY &#123;col_name | position&#125;[ASC | DESC],...[WITH ROLLUP]</span><br></pre></td></tr></table></figure>
+<p>指定在结果集中不仅包含由GROUP BY 子句分组后的数据行，还包括各分组的汇总行，以及所有分组的整行汇总行，可以得到每个分组以及每个分组汇总级别的值 </p>
+<h3 id="HAVING-子句"><a href="#HAVING-子句" class="headerlink" title="HAVING 子句"></a>HAVING 子句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAVING WHERE_COINDITION</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>HAVING子句</th>
+<th>WHERE子句</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>过滤分组</td>
+<td>过滤数据行</td>
+</tr>
+<tr>
+<td>可以包含聚合函数</td>
+<td>不可以包含聚合函数</td>
+</tr>
+<tr>
+<td>在数据分组后进行过滤</td>
+<td>在数据分组前过滤</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ORDER-BY-子句"><a href="#ORDER-BY-子句" class="headerlink" title="ORDER BY 子句"></a>ORDER BY 子句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORDER BY &#123;col_nae expr | position&#125;[AC | DESC],...</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>ORDER BY</th>
+<th>GROUP BY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>排序产生的输出</td>
+<td>分组行，但输出可能不是分组的排序</td>
+</tr>
+<tr>
+<td>任意列都可以使用</td>
+<td>只可能使用选择列或表达式</td>
+</tr>
+<tr>
+<td>不一定需要</td>
+<td>若聚合函数一起使用列或表达式，则必须使用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="LIMIT子句"><a href="#LIMIT子句" class="headerlink" title="LIMIT子句"></a>LIMIT子句</h3><p><strong>使用LIMIT子句限制被SELECT语句返回的行数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIMIT &#123;[offset,] row_count | row_count OFFSET OFFSET&#125;</span><br></pre></td></tr></table></figure></p>
+<p>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM customers LIMIT 1,2;</span><br><span class="line"></span><br><span class="line">SELECT * FROM customers 2 OFFSET 1;</span><br></pre></td></tr></table></figure></p>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><h3 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h3><p>视图是数据库中的一个对象，它是数据库管理系统提供给用户的以多种角度观察数据库中数据的一种重要机制</p>
+<p>视图不是数据库中真实的表，而是一张虚拟表，其自身并不存在</p>
+<h3 id="使用视图的优点"><a href="#使用视图的优点" class="headerlink" title="使用视图的优点"></a>使用视图的优点</h3><ul>
+<li>集中分散数据</li>
+<li>简化查询语句</li>
+<li>重用SQL语句</li>
+<li>保护数据安全</li>
+<li>共享所需数据</li>
+<li>更改数据格式<h3 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATEVIEW view_name[(column_list)]</span><br><span class="line">AS select_statement</span><br><span class="line">[WITH [CASCADED | LOCAL] CHECK OPTION]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>指定在可更新视图上所进行的修改都需要复符合select_statement中所指定的限制条件</p>
+<h3 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop view [if exists] view_name [,view_name]...</span><br></pre></td></tr></table></figure>
+<h3 id="修改视图定义"><a href="#修改视图定义" class="headerlink" title="修改视图定义"></a>修改视图定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ALTERVIEW view_name [(column_list)]</span><br><span class="line">AS select_statement</span><br><span class="line">[WITH [CASCADED | LOCAL] CHECK OPTION]</span><br></pre></td></tr></table></figure>
+<h3 id="查看视图定义"><a href="#查看视图定义" class="headerlink" title="查看视图定义"></a>查看视图定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW CREATE VIEW view_name</span><br></pre></td></tr></table></figure>
+<h3 id="更新视图数据"><a href="#更新视图数据" class="headerlink" title="更新视图数据"></a>更新视图数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO customers_view VALUES (NULL, &apos;农夫山泉&apos;, &apos;m&apos;, &apos;北京&apos;, &apos;有点甜&apos;);</span><br></pre></td></tr></table></figure>
+<p><strong>使用UPDATE语句通过视图修改基本表的数据</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE customers_view SET cust_address = &apos;湖北&apos; WHERE cust_name = &apos;农夫山泉&apos;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用DELETE语句通过视图删除基本表的数据</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM customers_view WHERE cust_name = &apos;农夫山泉&apos;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="查询数据视图"><a href="#查询数据视图" class="headerlink" title="查询数据视图"></a>查询数据视图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM customers_view;</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>双击⑥六6~</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechatpay.jpeg" alt="你以为 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay.jpeg" alt="你以为 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/24/数据库管理系统-第三章/" rel="next" title="数据库管理系统-第三章-数据库设计">
+                <i class="fa fa-chevron-left"></i> 数据库管理系统-第三章-数据库设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpeg"
+                alt="你以为" />
+            
+              <p class="site-author-name" itemprop="name">你以为</p>
+              <p class="site-description motion-element" itemprop="description">学而不厌，诲人不倦「孔子」</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/niyiwei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:240760715@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://goldbox.io" title="GolaBox" target="_blank">GolaBox</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-SQL与关系数据库基本操作"><span class="nav-number">1.</span> <span class="nav-text">第四章 - SQL与关系数据库基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL概述"><span class="nav-number">1.1.</span> <span class="nav-text">SQL概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是SQL"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么是SQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL的特点"><span class="nav-number">1.1.2.</span> <span class="nav-text">SQL的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL的组成"><span class="nav-number">1.1.3.</span> <span class="nav-text">SQL的组成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL预备知识"><span class="nav-number">1.2.</span> <span class="nav-text">MySQL预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL使用基础"><span class="nav-number">1.2.1.</span> <span class="nav-text">MySQL使用基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL扩展语言要素"><span class="nav-number">1.2.2.</span> <span class="nav-text">MySQL扩展语言要素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据定义"><span class="nav-number">1.3.</span> <span class="nav-text">数据定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库模式定义"><span class="nav-number">1.3.1.</span> <span class="nav-text">数据库模式定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#选择数据库"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">选择数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改数据库"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">修改数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除数据库"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">删除数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看数据库"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">查看数据库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表定义"><span class="nav-number">1.3.2.</span> <span class="nav-text">表定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建表"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">创建表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新表"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">更新表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除表"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看表"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">查看表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引定义"><span class="nav-number">1.3.3.</span> <span class="nav-text">索引定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#索引的创建：（使用CREATE-INDEX语句创建）"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">索引的创建：（使用CREATE INDEX语句创建）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看索引（SHOW-INDEX）"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">查看索引（SHOW INDEX）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除索引：使用DROP-INDEX语句"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">删除索引：使用DROP INDEX语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用ALTER-TABLE语句删除"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">使用ALTER TABLE语句删除</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据更新"><span class="nav-number">1.4.</span> <span class="nav-text">数据更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">1.4.1.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">1.4.2.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改数据"><span class="nav-number">1.4.3.</span> <span class="nav-text">修改数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据查询"><span class="nav-number">1.5.</span> <span class="nav-text">数据查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SELECT语句"><span class="nav-number">1.5.1.</span> <span class="nav-text">SELECT语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列的选择与指定"><span class="nav-number">1.5.2.</span> <span class="nav-text">列的选择与指定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM子句与多表连接查询"><span class="nav-number">1.5.3.</span> <span class="nav-text">FROM子句与多表连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#交叉连接，又称笛卡尔积"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">交叉连接，又称笛卡尔积</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内连接"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">内连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外链接"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">外链接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WHERE子句与条件查询"><span class="nav-number">1.5.4.</span> <span class="nav-text">WHERE子句与条件查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GROUP-BY-子句"><span class="nav-number">1.5.5.</span> <span class="nav-text">GROUP BY 子句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HAVING-子句"><span class="nav-number">1.5.6.</span> <span class="nav-text">HAVING 子句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ORDER-BY-子句"><span class="nav-number">1.5.7.</span> <span class="nav-text">ORDER BY 子句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LIMIT子句"><span class="nav-number">1.5.8.</span> <span class="nav-text">LIMIT子句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图"><span class="nav-number">1.6.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是视图"><span class="nav-number">1.6.1.</span> <span class="nav-text">什么是视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用视图的优点"><span class="nav-number">1.6.2.</span> <span class="nav-text">使用视图的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建视图"><span class="nav-number">1.6.3.</span> <span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除视图"><span class="nav-number">1.6.4.</span> <span class="nav-text">删除视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改视图定义"><span class="nav-number">1.6.5.</span> <span class="nav-text">修改视图定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看视图定义"><span class="nav-number">1.6.6.</span> <span class="nav-text">查看视图定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新视图数据"><span class="nav-number">1.6.7.</span> <span class="nav-text">更新视图数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据视图"><span class="nav-number">1.6.8.</span> <span class="nav-text">查询数据视图</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">你以为</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">11.2k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
