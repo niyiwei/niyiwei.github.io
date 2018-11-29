@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="你以为" />
+  <meta name="keywords" content="-- Java, JVM," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="学而不厌，诲人不倦「孔子」">
-<meta name="keywords" content="你以为">
-<meta property="og:type" content="website">
-<meta property="og:title" content="你以为">
-<meta property="og:url" content="http://yoursite.com/archives/2018/09/index.html">
+<meta name="description" content="想要一探JDK内部的实现机制，最便捷的路径之一就是自己编译一套JDK。 好气啊，书上的安装方法失败了好几次，尝试网上找找资料 先编译成功 加油！ 网站教程参考： 准别阶段： Mac 系统版本 10.14.1 OpenJdk官方的源码不是用Git管理的，源代码存放在http://hg.openjdk.java.net/,首先要安装版本管理工具 mercuial， 直接用 brew 进行安装 1br">
+<meta name="keywords" content="-- Java, JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解Java虚拟机-MAC编译虚拟机">
+<meta property="og:url" content="http://yoursite.com/2018/11/22/Java-JVM-BUILD/index.html">
 <meta property="og:site_name" content="你以为">
-<meta property="og:description" content="学而不厌，诲人不倦「孔子」">
+<meta property="og:description" content="想要一探JDK内部的实现机制，最便捷的路径之一就是自己编译一套JDK。 好气啊，书上的安装方法失败了好几次，尝试网上找找资料 先编译成功 加油！ 网站教程参考： 准别阶段： Mac 系统版本 10.14.1 OpenJdk官方的源码不是用Git管理的，源代码存放在http://hg.openjdk.java.net/,首先要安装版本管理工具 mercuial， 直接用 brew 进行安装 1br">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-22T12:39:46.862Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你以为">
-<meta name="twitter:description" content="学而不厌，诲人不倦「孔子」">
+<meta name="twitter:title" content="深入理解Java虚拟机-MAC编译虚拟机">
+<meta name="twitter:description" content="想要一探JDK内部的实现机制，最便捷的路径之一就是自己编译一套JDK。 好气啊，书上的安装方法失败了好几次，尝试网上找找资料 先编译成功 加油！ 网站教程参考： 准别阶段： Mac 系统版本 10.14.1 OpenJdk官方的源码不是用Git管理的，源代码存放在http://hg.openjdk.java.net/,首先要安装版本管理工具 mercuial， 直接用 brew 进行安装 1br">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/09/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/11/22/Java-JVM-BUILD/"/>
 
 
 
 
 
-  <title>归档 | 你以为</title>
+  <title>深入理解Java虚拟机-MAC编译虚拟机 | 你以为</title>
   
 
 
@@ -154,7 +155,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -282,148 +283,240 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/22/Java-JVM-BUILD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="你以为">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="你以为">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">深入理解Java虚拟机-MAC编译虚拟机</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-22T20:12:51+08:00">
+                2018-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 11 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">-- Java</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/17/数据库管理系统-第七章/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">数据库管理系统-第七章</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  156
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-17T20:36:01+08:00"
-              content="2018-09-17" >
-          09-17
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/05/数据库管理系统-第六章/" itemprop="url">
-              
-                <span itemprop="name">数据库管理系统.第六章</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-05T20:50:10+08:00"
-              content="2018-09-05" >
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/04/数据库管理系统-第五章/" itemprop="url">
-              
-                <span itemprop="name">数据库系统原理 - 数据库编程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-04T20:10:52+08:00"
-              content="2018-09-04" >
-          09-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>想要一探JDK内部的实现机制，最便捷的路径之一就是自己编译一套JDK。</p>
+<p>好气啊，书上的安装方法失败了好几次，尝试网上找找资料 先编译成功 加油！</p>
+<p>网站教程参考：</p>
+<h2 id="准别阶段："><a href="#准别阶段：" class="headerlink" title="准别阶段："></a>准别阶段：</h2><ul>
+<li>Mac 系统版本 <strong>10.14.1</strong></li>
+<li><p>OpenJdk官方的源码不是用Git管理的，源代码存放在<a href="http://hg.openjdk.java.net/" target="_blank" rel="noopener">http://hg.openjdk.java.net/</a>,首先要安装版本管理工具 mercuial， 直接用 brew 进行安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mercurial</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载适合版本的源码，我打算用jdk8u-dev 克隆源代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hg clone http://hg.openjdk.java.net/jdk8u/jdk8u-dev/</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>双击⑥六6~</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechatpay.jpeg" alt="你以为 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay.jpeg" alt="你以为 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java-JVM/" rel="tag"># -- Java, JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/17/数据库管理系统-第七章/" rel="next" title="数据库管理系统-第七章">
+                <i class="fa fa-chevron-left"></i> 数据库管理系统-第七章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -431,6 +524,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -451,8 +551,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -482,7 +591,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -493,7 +602,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -547,6 +656,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准别阶段："><span class="nav-number">1.</span> <span class="nav-text">准别阶段：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -574,7 +699,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">16.5k</span>
+    <span title="Site words total count">14.2k</span>
   
 </div>
 
@@ -695,6 +820,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
