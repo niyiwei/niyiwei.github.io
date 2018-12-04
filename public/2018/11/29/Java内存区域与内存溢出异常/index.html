@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="你以为">
 <meta property="og:description" content="Java 与 C++ 之间有堵由内存动态分配和垃圾收集技术所围成的“高墙”，墙外面的人想进去，墙里面的人却想出来。  概述对于Java程序员来说，在虚拟机自动内存管理机制的帮助下，不需要为每一个new操作去写匹配的 delete/free 代码，不容易出现内存泄漏和内存溢出问题，由虚拟机管理内存。不过一旦出现内存泄漏和内存溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会成为一项">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-29T13:52:38.572Z">
+<meta property="og:updated_time" content="2018-12-03T23:23:34.347Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第 2 章 Java内存区域与内存溢出异常">
 <meta name="twitter:description" content="Java 与 C++ 之间有堵由内存动态分配和垃圾收集技术所围成的“高墙”，墙外面的人想进去，墙里面的人却想出来。  概述对于Java程序员来说，在虚拟机自动内存管理机制的帮助下，不需要为每一个new操作去写匹配的 delete/free 代码，不容易出现内存泄漏和内存溢出问题，由虚拟机管理内存。不过一旦出现内存泄漏和内存溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会成为一项">
@@ -380,7 +380,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,443
+                  4,452
                 </span>
               
 
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8
+                  15
                 </span>
               
             </div>
@@ -421,6 +421,7 @@
 <p>Java 与 C++ 之间有堵由内存动态分配和垃圾收集技术所围成的“高墙”，墙外面的人想进去，墙里面的人却想出来。</p>
 </blockquote>
 <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>对于Java程序员来说，在虚拟机自动内存管理机制的帮助下，不需要为每一个new操作去写匹配的 delete/free 代码，不容易出现内存泄漏和内存溢出问题，由虚拟机管理内存。不过一旦出现内存泄漏和内存溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会成为一项异常艰难的工作。</p>
+<a id="more"></a>
 <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><p>Java 虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁。</p>
 <p>根据《Java虚拟机规范（Java SE 7版）》的规定，Java虚拟机锁管理的内存将会包括以下几个运行时数据区域</p>
 <h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>程序计数器(<strong>Program Counter Register</strong>)是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里(仅是概念模型，各种虚拟机可能会通过一些更高效的方式去实现)，字节码解释器工作时就是通过改变这个额计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。</p>
@@ -443,6 +444,27 @@
 <h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><p>直接内存(<strong>Direction Memory</strong>)并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域。但是这部分内存也被频繁地使用，而且也可能导致 OutOfmemoryerror异常出现。</p>
 <p>在JDK1.4中新加入了NIO(New Input/Output)类，引入了一种基于通道（Channel）与缓冲区（Buffer）的I/O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中的DirectBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在Java堆和Native堆中来回复制数据。</p>
 <p>显然，本机直接内存的分配不受Java堆大小的限制，但是，既然是内存，肯定还是会受到本机总内存（包括RAM以及SWAP区或者分页文件）大小以及处理器寻址空间的限制。服务器管理员在配置虚拟机参数时，会根据实际内存设置-Xmx等参数信息，但经常忽略直接内存，使得各个内存区域总和大于物理内存限制（包括物理的和操作系统级的限制），从而导致动态扩展时出现Outofmemoryerror异常</p>
+<h1 id="HotSpot-虚拟机对象探秘"><a href="#HotSpot-虚拟机对象探秘" class="headerlink" title="HotSpot 虚拟机对象探秘"></a>HotSpot 虚拟机对象探秘</h1><h2 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h2><p>虚拟机遇到一条new指令时，首先将去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否被加载、解析和初始化过。如果没有，那必须先执行相应的类加载过程。</p>
+<p>在类加载检查通过后，接下来虚拟机将为新生对象分配内存。对象所需内存的大小在类加载完后便可完全确定,为对象分配空间的任务等同于把一块确定大小的内存从Java堆中划分出来。 假设Java堆中内存是绝对规整的，所有用过的内存都放在一边,空闲的内存放在另一边，中间放着一个指针作为分解点的指示器，那所分配内存就仅仅是把那个指针向空闲空间那边挪动一段与对象大小相等的距离，这种分配方式称为“指针碰撞”(<strong>Bump the Pointer</strong>)。如果Java堆中的内存并不是规整的，已使用的内存和空闲的内存相互交错，那就没有办法简单地进行指针碰撞，虚拟机就必须维护一个列表，记录上哪些内存块是可用的，在分配的时候从列表中找到一块足够大的空间划分给对象实例，并更新列表上的记录，这种分配方式称为“空闲列表”(Free List)</p>
+<p>除如何划分可用空间之外，还有另一个需要考虑的问题是对象创建在虚拟机中是非常频繁的行为，即使是仅仅修改一个指针所指向的位置，在并发情况下也并不是线程安全的，可能出现正在给对象A分配内存，指针还没来得及修改，对象B又同时了原来的指针来分配内存当前情况。解决这个问题有两种方案。</p>
+<p>一种是：对分配内存空间的动作进行同步处理–实际上虚拟机采用CAS配上失败重试的方式保证更新操作的原子性；</p>
+<p>一种是：把内存分配的动作按照线程划分为不同的空间之中进行，即每个线程在Java堆中预先分配一小块内存，称为本地线程分配缓冲（<strong>Thread Local Allocation Buffer， TLABA</strong>）。哪个线程要分配内存，就在哪个线程的TLAB上分配，只有TLAB用完并分配新的TLAB时，才需要同步锁定。虚拟机使用使用TLAB，可以通过 <strong>-XX:+/-UseTLAB</strong> 参数来设定。</p>
+<p>内存分配完后，虚拟机需要将分配到的内存空间都初始化为零值（不包括对象头），如果使用TLAB，这一工作也可以提前至TLAB分配时进行。这一步操作保证了对象的实例字段在Java代码中可以不赋初始值就直接使用，程序能访问到这些字段都是数据类型所对应的零值。</p>
+<p>接下来，虚拟机要对对象进行必要的设置，例如这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。这些信息存放在对象的对象头（Object Header）之中。</p>
+<p>在上面工作都做完后，从虚拟机的视角来看，一个新的对象已经产生了，但从Java程序的视角来看，对象创建才刚刚开始 —&gt;<init>方法还没有执行，所有的字段都还为零。所以，一般来说（由字节码是否跟随invokespecial指令所决定），执行new指令之后会接着执行 <init> 方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完全产生出来。</init></init></p>
+<h2 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h2><p>在HotSpot虚拟机中，对象在内存中存储的布局可以分为3块区域：对象头（Header）、实例数据（Instance Data）和对其填充（Padding）。</p>
+<p>HotSpot虚拟机的对象头包括两部分信息，第一部分可用于存储对象自身的运行时数据，如 哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向线程ID、偏向时间戳等，这部分数据的长度在32位和64位的虚拟机(未开启压缩指针)中分别为32bit和64bit，官方称为“Mark Word”。</p>
+<p>对象头的另外一部分是类型指针，即对象指向它的元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。并不是所有的虚拟机实现都必须在对象数据上保留类型指针，换句话说，查找对象的元数据信息并不一定要经过对象本身。另外如果对象是一个Java数组，那在对象头中还必须有一块用于记录数组长度的数据，因为虚拟机可以通过普通Java对象的元数据信息确定Java对象大大小，但是从数组的元数据中却无法确定数组的大小。</p>
+<p>HotSpot虚拟机默认的分配策略为 longs/doubles、ints、shorts/chars、bytes/booleans、oops（Ordinary Object Pointers），从分配策略中可以看出，相同宽度的字段总是被分配在一起。在满足这个前提条件的情况下，在父类中定义的变量会出现在子类之前。如果CompactFields参数值为true（默认true），那么子类之中较窄的变量也可能会插入到父类变量的空隙之中。</p>
+<p>第三部分对齐填充并不是必然存在的，也没有特别的含义，它仅仅起着占位符的作用，由于HotSpot VM的自动内存管理系统要求对象起始地址必须是8字节的整数倍，换句话说，就是对象的大小必须是8字节的整数倍。而对象头部分正好是8字节的倍数(1倍数或者2倍)，因此，当对象实例数据部分没有对齐时，就需要通过对齐填充来补全。</p>
+<h2 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h2><p>建立对象是为使用对象，我们的Java程序需要通过栈上的reference数据来操作堆上的具体对象。由于reference类型在Java虚拟机规范中只规定了一个指向对象的引用，并没有定义这个引用应该通过何种方式去定位，访问堆中的对象的具体位置，所以对象访问方式也是取决与虚拟机实现而定的。</p>
+<p>目前主流的访问方式有 <strong>“使用句柄”</strong> 和 <strong>“直接指针两种”</strong></p>
+<h3 id="使用句柄"><a href="#使用句柄" class="headerlink" title="使用句柄"></a>使用句柄</h3><p>Java堆中将会划分出一块内存来作为句柄持，reference中存储的就是对象的句柄地址，而句柄中包含了对象实例数据与类型数据各自的具体地址信息</p>
+<h3 id="直接指针"><a href="#直接指针" class="headerlink" title="直接指针"></a>直接指针</h3><p>Java堆对象的布局就必须考虑如何放置访问类型数据的相关信息，而reference中存储的直接就是对象地址</p>
+<p><strong>优势</strong></p>
+<p>使用句柄来访问的最大好处就是reference中存储的是稳定的句柄地址，在对象移动（垃圾收集时移动对象是非常普遍的行为）时只会改变句柄中的实例数据指针，而reference本身不需要修改</p>
+<p>使用直接指针访问方式的最大好处就是速度更快，它节省了一次指针定位的时间开销，由于对象的访问在Java中非常频繁，因此这类开销积少成多后也是一项非常客观的执行成本。</p>
+<p>虚拟机Sun HotSpot使用的是 <strong>直接指针</strong> 进行对象访问</p>
 
       
     </div>
@@ -513,6 +535,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/04/OutOfMemoryError异常/" rel="prev" title="OutOfMemoryError异常">
+                OutOfMemoryError异常 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -596,7 +622,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -659,7 +685,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://goldbox.io" title="GolaBox" target="_blank">GolaBox</a>
+                    <a href="https://www.phdong.cn/" title="Phdong" target="_blank">Phdong</a>
                   </li>
                 
               </ul>
@@ -681,7 +707,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行时数据区域"><span class="nav-number">2.</span> <span class="nav-text">运行时数据区域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器"><span class="nav-number">2.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">2.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈"><span class="nav-number">2.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-堆"><span class="nav-number">2.4.</span> <span class="nav-text">Java 堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区"><span class="nav-number">2.5.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时常量池"><span class="nav-number">2.6.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接内存"><span class="nav-number">2.7.</span> <span class="nav-text">直接内存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行时数据区域"><span class="nav-number">2.</span> <span class="nav-text">运行时数据区域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器"><span class="nav-number">2.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">2.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈"><span class="nav-number">2.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-堆"><span class="nav-number">2.4.</span> <span class="nav-text">Java 堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区"><span class="nav-number">2.5.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时常量池"><span class="nav-number">2.6.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接内存"><span class="nav-number">2.7.</span> <span class="nav-text">直接内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HotSpot-虚拟机对象探秘"><span class="nav-number">3.</span> <span class="nav-text">HotSpot 虚拟机对象探秘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的创建"><span class="nav-number">3.1.</span> <span class="nav-text">对象的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的内存布局"><span class="nav-number">3.2.</span> <span class="nav-text">对象的内存布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的访问定位"><span class="nav-number">3.3.</span> <span class="nav-text">对象的访问定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用句柄"><span class="nav-number">3.3.1.</span> <span class="nav-text">使用句柄</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接指针"><span class="nav-number">3.3.2.</span> <span class="nav-text">直接指针</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -715,7 +741,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">16.5k</span>
+    <span title="Site words total count">23.8k</span>
   
 </div>
 
