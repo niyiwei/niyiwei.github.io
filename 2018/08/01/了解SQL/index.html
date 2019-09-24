@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 了解SQL · 你以为</title><meta name="description" content="了解SQL - 你以为"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="你以为"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">文章</a></li><li class="nav-list-item"><a href="https://github.com/niyiwei" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">了解SQL</h1><div class="post-info">2018年8月1日</div><div class="post-content"><h1 id="1、数据库基础"><a href="#1、数据库基础" class="headerlink" title="1、数据库基础"></a>1、数据库基础</h1><h2 id="什么是数据库"><a href="#什么是数据库" class="headerlink" title="什么是数据库"></a>什么是数据库</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;数据库是一个以某种有组织的方式存储的数据集合。理解数据库的一种最简单的办法是将其想象为一个文件柜。此文件柜是一个存放数据的物理位置，不管数据是什么以及如何组织的。</p>
+<blockquote>
+<p>数据库软件应称为DBMS（数据库管理系统）。数据库是通过DBMS创建和操纵的容器。<br><a id="more"></a></p>
+</blockquote>
+<h2 id="表"><a href="#表" class="headerlink" title="表"></a>表</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;在你将资料放入自己id文件柜时，并不是随便将它们扔进某个抽屉就完事了，而是在文件柜中创建文件，然后将相关的资料放入特定的文件中。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;在数据库领域中，这种文件成为表。表示一种结构化的文件，可用来存储某种特定类型的数据。</p>
+<blockquote>
+<p>表（table）某总特定类型数据的结构化清单<br>&nbsp;&nbsp;&nbsp;&nbsp;存储在表中的数据是一种类型的数据或一个清单。决不应该将顾客的清单与订单的清单存储在同一个数据库表中。<br>&nbsp;&nbsp;&nbsp;&nbsp;数据库中的每个表都有一个名字，用来标识自己。此名字是唯一的。</p>
+</blockquote>
+<h2 id="列和数据类型"><a href="#列和数据类型" class="headerlink" title="列和数据类型"></a>列和数据类型</h2><p>表由列组成。列中存储着表中某部分信息</p>
+<blockquote>
+<p>列（column）表中的一个字段。所有的表都是由一个或多个列组成的。</p>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;数据库中每个列都有相应的数据类型。数据类型定义列可以存储的数据种类。</p>
+<blockquote>
+<p>数据类型（datatype）所容许的数据的类型。每个列表都有相应的数据类型，它限制（或容许）该列中存储的数据</p>
+</blockquote>
+<h2 id="行"><a href="#行" class="headerlink" title="行"></a>行</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;表中的数据是按行存储的，所保存的每个记录存储在自己的行内。</p>
+<blockquote>
+<p>行（row）表中的一个记录。</p>
+</blockquote>
+<h2 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;表中的每一行都应该有可以唯一表示自己的一列。</p>
+<blockquote>
+<p>主键（primary key）一列，其值能够唯一区分表中的每个行。</p>
+</blockquote>
+<p>表中的任何列都可以作为主键，只要它满足以下条件：</p>
+<ul>
+<li>任意两行都不具有相同的主键值；</li>
+<li>每个行都必须具有一个主键值（主键列不允许NULL值）</li>
+</ul>
+<p>主键的最好的习惯：</p>
+<ul>
+<li>不更新主键列中的值；</li>
+<li>不重用主键列的值；</li>
+<li>不再主键列中使用可能会更改的值。</li>
+</ul>
+<h2 id="什么是SQL"><a href="#什么是SQL" class="headerlink" title="什么是SQL"></a>什么是SQL</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;SQL（发音为字母S-Q-L或sequel）是结构化查询语言（Structured Query Language）的缩写。SQL是一种专门用来与数据库通信的语言。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/08/02/使用MySQL/" class="prev">上一篇</a><a href="/2018/07/27/学习MarkDown语法-一/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2019 <a href="http://yoursite.com">你以为</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

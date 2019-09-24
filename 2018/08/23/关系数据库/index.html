@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 第二章 · 关系数据库 · 你以为</title><meta name="description" content="第二章 · 关系数据库 - 你以为"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="你以为"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">文章</a></li><li class="nav-list-item"><a href="https://github.com/niyiwei" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">第二章 · 关系数据库</h1><div class="post-info">2018年8月23日</div><div class="post-content"><h1 id="第二章-·-关系数据库"><a href="#第二章-·-关系数据库" class="headerlink" title="第二章 · 关系数据库"></a>第二章 · 关系数据库</h1><ul>
+<li>关系数据库概述</li>
+<li>关系数据模型</li>
+<li>关系数据库的规范化理论（范式）</li>
+</ul>
+<a id="more"></a>
+<h2 id="2-1-关系数据库概述"><a href="#2-1-关系数据库概述" class="headerlink" title="2.1 关系数据库概述"></a>2.1 关系数据库概述</h2><h3 id="关系数据库的产生历史"><a href="#关系数据库的产生历史" class="headerlink" title="关系数据库的产生历史"></a>关系数据库的产生历史</h3><ul>
+<li>1970年 IBM的E.F.Codd提出了关系模型，奠定了关系数据库的理论基础</li>
+<li>20世纪70年代末 关系方法理论研究和软件系统的研制取得了重大突破</li>
+<li>1981年 出现了比较成熟的关系数据库管理技术，证实了关系数据库的优点<blockquote>
+<p>高级的非过程语言接口、较好的数据独立性</p>
+</blockquote>
+</li>
+<li>20世纪80年代后 网状模型和层次模型与低层实现的结合紧密，关系模型具有坚实理论基础，称成为主流数据模型</li>
+</ul>
+<h2 id="2-2-关系数据模型"><a href="#2-2-关系数据模型" class="headerlink" title="2.2 关系数据模型"></a>2.2 关系数据模型</h2><h3 id="组成要素"><a href="#组成要素" class="headerlink" title="组成要素"></a>组成要素</h3><ul>
+<li>关系数据结构</li>
+<li>关系操作集合</li>
+<li>关系完整性约束</li>
+</ul>
+<h3 id="关系数据结构"><a href="#关系数据结构" class="headerlink" title="关系数据结构"></a>关系数据结构</h3><ul>
+<li>表（Table）是一个二维的数据结构，由表名、列、若干行数据组成</li>
+<li>关系（Relation）一个关系逻辑上对应一张二维表，可以为每个关系去一个名称进行表示<ul>
+<li>基本关系（基本关系表、基表）</li>
+<li>查询表</li>
+<li>视图表</li>
+</ul>
+</li>
+<li>列（Column）也称字段（Field）或属性（Attribute）<ul>
+<li>表名必须唯一</li>
+<li>字段名必须唯一</li>
+<li>不同表中可以出现相同的字段名</li>
+</ul>
+</li>
+<li>属性（Attribute）= <strong>列</strong></li>
+<li>行（Row）也成为 <strong>元组（Tuple）</strong> 或 <strong>记录（Record）</strong>。表中的数据按行存储</li>
+<li><p>分量（Component）= <strong>具体的数据项</strong> </p>
+<p>  元组（行）中的一个属性值，称为分量</p>
+</li>
+<li><p>码或键（Key）</p>
+<p>  <strong>属性（或属性组）的值</strong> 都能用来 <strong>唯一</strong>表示该关系的元组，则称这些属性（或属性组）为该关系的码或键</p>
+</li>
+<li><p>超码或超键（Super Key）</p>
+<p>  在码中去除某个属性，它仍然是这个关系的码</p>
+</li>
+<li><p>候选码或候选键（Candidate Key）</p>
+<p>  在码中不能从中移去任何一个属性，否则它就不再是这个关系的码或键。候选码或候选键是这个关系的最小超码或超键</p>
+</li>
+<li><p>主属性（Primary Attribute）或非主属性（NonPrimanry Attribute）</p>
+<p>  包含在任何一个候选码中的属性称为主属性或码属性</p>
+</li>
+<li><p>主码或主键（Primary Key）主观意愿指定的</p>
+<p>  在若干个候选码中指定一个唯一标识关系的元组（行）</p>
+</li>
+<li><p>全码或全键（All Key）</p>
+<p>  一个关系模式的所有属性集合是这个关系的主码或主键，这样主码或主键称为全码或全键</p>
+</li>
+<li><p>外码或外键（Foreign Key）</p>
+<p>  某个属性（或属性组）不是这个关系的主码或候选码，而是另一个关系的主码</p>
+</li>
+<li>域（Domain）表示属性的取值范围</li>
+<li><p>数据类型（Date Type）</p>
+<p>  每个列都有相应的数据类型，它用于限制（或容许）该列中存储的数据</p>
+</li>
+<li><p>关系模式（Relation Schema）</p>
+<p>  关系模型是型（type），关系是值（value），即关系模式是对关系的描述<br>  关系模式是静态的、稳定的<br>  关系是动态的，随时间不断变化的</p>
+</li>
+<li><p>关系数据库（Relation Database）</p>
+<p>  所有关系的集合，构成了一个关系数据库<br>  以关系的集合，构成一个关系数据库。<br>  以关系模型作为数据的逻辑模型，并采用关系作为数据的组织方式的一类数据库，其数据操作建立在关系代数的基础上<br>  关系数据库对关系的限定/要求：</p>
+<ol>
+<li>每个属性都是不可分解的（不允许表中有表）</li>
+<li>每个关系仅仅有一种关系模式</li>
+<li>每一个关系模式中的属性必须命名，属性名不同</li>
+<li>同一个关系中不允许出现候选码或候选键值完全相同的元组</li>
+<li>在关系中元组的顺序（即行序）是无关紧要的，可以任意交换</li>
+<li>在关系中属性的顺序（即列序）是无关紧要的，可以任意交换</li>
+</ol>
+</li>
+</ul>
+<h3 id="基本的关系操作"><a href="#基本的关系操作" class="headerlink" title="基本的关系操作"></a>基本的关系操作</h3><ul>
+<li>查询（Query）<ul>
+<li>选择</li>
+<li>投影</li>
+<li>并</li>
+<li>差</li>
+<li>笛卡尔积<blockquote>
+<p>由上述的操作引出 连接、除、交</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>插入（Insert）</li>
+<li>修改（Delete）</li>
+<li>删除（Update）</li>
+</ul>
+<p>特点：集合操作方法（一次一集合）</p>
+<h3 id="关系数据语言"><a href="#关系数据语言" class="headerlink" title="关系数据语言"></a>关系数据语言</h3><ol>
+<li>关系代数语言</li>
+<li>SQL</li>
+<li>关系演算语言<ol>
+<li>元组关系演算</li>
+<li>域关系演算</li>
+</ol>
+</li>
+</ol>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><p>任何一种操作都包含三大要素：</p>
+<ul>
+<li>操作对象</li>
+<li>操作符<ol>
+<li>集合运算符</li>
+<li>关系运算符</li>
+<li>比较操作符</li>
+<li>逻辑操作符</li>
+</ol>
+</li>
+<li>操作结果</li>
+</ul>
+<h3 id="传统的集合运算符"><a href="#传统的集合运算符" class="headerlink" title="传统的集合运算符"></a>传统的集合运算符</h3><ul>
+<li>并（UNION）    R3 = R1 ∪ R2 两个关系必须有相同的属性个数</li>
+<li>差（DIFFERENCE）R3 = R1 - R2 两个关系必须有相同的属性个数</li>
+<li>交（INTERSECTION）R3 = R1 ∩ R2 两个关系必须有相同的属性个数</li>
+<li>笛卡尔积（CARTESIAN PRODUCT）R3 = R1 × R3 两个关系可以由不相同的属性个数</li>
+</ul>
+<h3 id="专门的关系运算"><a href="#专门的关系运算" class="headerlink" title="专门的关系运算"></a>专门的关系运算</h3><p>选择（SELECT）：Of(R)</p>
+<blockquote>
+<p>SELECT 关系名 WHERE 条件<br>由常数、属性名或列名、比较操作符（&gt;、&lt;、=、≥、≤、≠）及逻辑操作符（）组成的条件表达式</p>
+</blockquote>
+<p>投影（PROJECTION）πA（R）</p>
+<blockquote>
+<p>PROJECTION 关系名（属性名1，属性名2，…，属性名n）</p>
+</blockquote>
+<p>连接（JOIN）</p>
+<blockquote>
+<p>JOIN 关系名1 AND 关系名2 WHERE 条件<br>1、笛卡尔积<br>2、只留属性值相同<br>3、去掉重复列</p>
+</blockquote>
+<p>除（DIVISION）：R ÷ S</p>
+<p>1、投影<br>2、笛卡尔积<br>3、全部相同<br>4、得出除表</p>
+<h3 id="完整性约束"><a href="#完整性约束" class="headerlink" title="完整性约束"></a>完整性约束</h3><p>数据库的完整性是值数据库中数据的 <strong>正确性</strong>、<strong>相容性</strong>、<strong>一致性</strong></p>
+<p>分类：</p>
+<ul>
+<li>实体完整性约束（Entity Integrity Constraint）主码的组成不能为空，主属性不能是空值NULL</li>
+<li>参照完整性约束（Referential Integrity Constraint）定义外码和主码之间的引用规则，要么外码等于主码中某个元组的主码值，要么Null值</li>
+<li>用户定义完整性约束（User-defined Integrity Constraint）域完整性约束（针对某一应用环境的完整性约束），其他</li>
+</ul>
+<p>执行插入操作的检验</p>
+<ol>
+<li>检查实体完整性约束</li>
+<li>检查参照完整性约束</li>
+<li>检查用户定义完整性约束</li>
+</ol>
+<p>执行删除操作  (是否被引用)</p>
+<ol>
+<li>一般只需要对被参照关系检查参照完整性约束</li>
+</ol>
+<p>执行更新操作<br>上述两种情况的综合</p>
+<h2 id="关系数据库的规范化理论"><a href="#关系数据库的规范化理论" class="headerlink" title="关系数据库的规范化理论"></a>关系数据库的规范化理论</h2><ol>
+<li>关系模式中可能存在的冗余和异常问题</li>
+<li>函数依赖于关键字</li>
+<li>范式于关系规范化过程</li>
+</ol>
+<h3 id="关系模式中可能存在的冗余和异常问题"><a href="#关系模式中可能存在的冗余和异常问题" class="headerlink" title="关系模式中可能存在的冗余和异常问题"></a>关系模式中可能存在的冗余和异常问题</h3><p><strong>数据冗余</strong>：指同一数据被反复存储的情况</p>
+<p><strong>更新异常</strong>：数据冗余造成的</p>
+<p><strong>插入异常</strong>：</p>
+<p><strong>删除异常</strong>：</p>
+<h3 id="函数依赖于关键字"><a href="#函数依赖于关键字" class="headerlink" title="函数依赖于关键字"></a>函数依赖于关键字</h3><p>什么是函数？ f: a –&gt; B, y=f(x)</p>
+<p>分类：</p>
+<h4 id="完全函数规范"><a href="#完全函数规范" class="headerlink" title="完全函数规范"></a>完全函数规范</h4><p>设R为任意给定关系，X、Y为其属性值，若 X 依赖 Y，且对X中的任何真子集X丿，都有 X丿 依赖 Y，则称Y完全函数依赖于X<br>例：X 表  A,B属性 组成 R，并且 X 依赖 Y，且对X中的任何真子集</p>
+<h4 id="部分函数依赖"><a href="#部分函数依赖" class="headerlink" title="部分函数依赖"></a>部分函数依赖</h4><p>设R为任意给定关系，X、Y为其属性值，若 X 依赖 Y，且对X中的存在一个真子集X丿，满足 X丿 依赖 Y，则称Y部分函数依赖于X</p>
+<h4 id="传递函数依赖"><a href="#传递函数依赖" class="headerlink" title="传递函数依赖"></a>传递函数依赖</h4><p>设R为任一给定关系， X,Y,Z为其不同属性子集，若 X 依赖 Y， Y 不依赖 X， Y 依赖 Z， 则有 X 依赖 Z，称为Z传递函数依赖于X</p>
+<h4 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h4><p>设R为任一给定关系，U为其所含的全部属性集合 X为U的子集，若有完全函数以为 X依赖U，则X为R的一个候选关键字</p>
+<h3 id="范式与关系规范化过程"><a href="#范式与关系规范化过程" class="headerlink" title="范式与关系规范化过程"></a>范式与关系规范化过程</h3><p>一个低一级范式的关系模式通过模式分解（Schema Decomposition）可以转换为若干个高一级范式的关系模式的集合，这个过程就叫 <strong>规范化（Normalization）</strong></p>
+<h4 id="第一范式1NF"><a href="#第一范式1NF" class="headerlink" title="第一范式1NF"></a>第一范式1NF</h4><p>设R为任意给定关系，若果R中每个列与行的交点处的取值都是不可再分的基本元素，则R为第一范式</p>
+<h4 id="第二范式"><a href="#第二范式" class="headerlink" title="第二范式"></a>第二范式</h4><p>设R为任意给定关系，若R为1NF，且其所有非主属性都完全含糊依赖于候选关键字，则R为第二范式</p>
+<h4 id="第三范式"><a href="#第三范式" class="headerlink" title="第三范式"></a>第三范式</h4><p>设R为任意给定关系，若R为2NF，且其每一个非主属性都不传递函数依赖于候选关键字，则R为第三范式</p>
+<h4 id="第三范式的改进形式BCNF"><a href="#第三范式的改进形式BCNF" class="headerlink" title="第三范式的改进形式BCNF"></a>第三范式的改进形式BCNF</h4><p>设R为任一给定关系，X,Y为其属性集，F为函数依赖集，若R为3NF，且其F中所有函数依赖 X -&gt; Y(Y不属于X)中的X必包含候选关键字，则R为BCNF。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/11/29/Java内存区域与内存溢出异常/" class="prev">上一篇</a><a href="/2018/08/02/检索数据/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2019 <a href="http://yoursite.com">你以为</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
