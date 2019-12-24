@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
+    <loc>http://yoursite.com/life/index.html</loc>
     
     <lastmod>2019-09-24T14:34:19.763Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/life/index.html</loc>
+    <loc>http://yoursite.com/tags/index.html</loc>
     
     <lastmod>2019-09-24T14:34:19.763Z</lastmod>
     
@@ -51,13 +51,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/12/04/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E7%AE%97%E6%B3%95/</loc>
-    
-    <lastmod>2019-09-24T14:34:19.760Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2018/12/05/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/</loc>
     
     <lastmod>2019-09-24T14:34:19.760Z</lastmod>
@@ -65,7 +58,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/08/23/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <loc>http://yoursite.com/2018/12/04/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2019-09-24T14:34:19.760Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/08/02/%E4%BD%BF%E7%94%A8MySQL/</loc>
     
     <lastmod>2019-09-24T14:34:19.759Z</lastmod>
     
@@ -79,21 +79,21 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/08/02/%E4%BD%BF%E7%94%A8MySQL/</loc>
+    <loc>http://yoursite.com/2018/08/23/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     
     <lastmod>2019-09-24T14:34:19.759Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/12/04/OutOfMemoryError%E5%BC%82%E5%B8%B8/</loc>
+    <loc>http://yoursite.com/2018/11/29/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/</loc>
     
     <lastmod>2019-09-24T14:34:19.758Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/11/29/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/</loc>
+    <loc>http://yoursite.com/2018/12/04/OutOfMemoryError%E5%BC%82%E5%B8%B8/</loc>
     
     <lastmod>2019-09-24T14:34:19.758Z</lastmod>
     
